@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+
+{% block content %}
+    <!-- Horizontal Steppers -->
+<div class="row">
+  <div class="col-md-12">
+
+    <!-- Stepers Wrapper -->
+    <ul class="stepper stepper-horizontal">
+
+      <!-- First Step -->
+      <li class="completed">
+        <a href="#!">
+          <span class="circle">1</span>
+          <span class="label">Transaction Form</span>
+        </a>
+      </li>
+
+      <!-- Second Step -->
+      <li>
+        <a href="#!">
+          <span class="circle">2</span>
+          <span class="label">Passenger Form</span>
+        </a>
+      </li>
+
+      <!-- Third Step -->
+      <li>
+        <a href="#!">
+          <span class="circle">3</span>
+          <span class="label">Booking Summary</span>
+        </a>
+      </li>
+
+    </ul>
+    <!-- /.Stepers Wrapper -->
+
+  </div>
+</div>
+<!-- /.Horizontal Steppers -->
+    <!-- Card -->
+    <div class="card mx-xl-5">
+
+      <!-- Card body -->
+      <div class="card-body">
+
+        <!-- Default form subscription -->
+        <form method="post">
+            {% csrf_token %}
+            {{ form.management_form }}
+          <p class="h4 text-center py-4"  style="background-color: #eeeeee">Transaction Form</p>
+          <table class="table table-sm table-borderless" width="100%">
+                          <tbody>
+                            <tr>
+                                <td><strong>Package:</strong> {{ package.title }}</td>
+                                <td style="text-align: end"><strong>Package ID:</strong> {{ package.id }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Travel Date:</strong> {{ package.travel_outbound_flight_date }} - {{ package.travel_outbound_flight_date }}</td>
+                                <td style="text-align: end"><strong>Days of Stay:</strong> {{ package.num_days }} days</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><strong>Package Inclusions:</strong>  {{ package.inclusions }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><strong>Package Exclusions:</strong>  {{ package.exclusions }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><strong>Terms and Conditions:</strong>  {{ package.terms_and_conditions }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+          <hr>
+
+          <div class="form-row justify-content-center">
+
+              <div class="form-group col-md-2 mb-0 text-center">
+                {{ form.quantity|as_crispy_field }}
+              </div>
+          </div>
+        <p class="font-italic text-center">Note: Please include yourself in the quantity if you are included in the travel.</p>
+
+          <div class="text-center py-4 mt-3">
+            <a><button class="btn btn-outline-indigo" type="submit">Submit<i class="fa fa-paper-plane-o ml-2"></i></button></a>
+          </div>
+        </form>
+        <!-- Default form subscription -->
+
+      </div>
+      <!-- Card body -->
+
+    </div>
+    <!-- Card -->
+{% endblock content %}

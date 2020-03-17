@@ -1,11 +1,13 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 
 from django.conf import settings
 from .models import Package
-from .forms import UserRegisterForm
+from .forms import UserRegisterForm, PurchaseForm
 
 
 # Create your views here.
@@ -43,3 +45,24 @@ class PackageListView(ListView):
 class PackageDetailView(DetailView):
     model = Package
     template_name = 'dap_booking/package.html'
+
+
+@login_required
+def purchase(request, pk):
+    package = Package.objects.get(pk=pk)
+    user = User.objects.get(username=request.user.username)
+    form = PurchaseForm(initial={'package': package, 'user': user})
+    if request.method == 'POST':
+        form = PurchaseForm(request.POST, initial={'package': package, 'user': user})
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = request.user
+            post.package = package
+            post.proof_of_payment_status = False
+            post.save()
+            #global quantity
+            #quantity = post.quantity
+            return redirect('/')
+
+    context = {'form': form, 'package': package}
+    return render(request, 'dap_booking/purchase_form.html', context)

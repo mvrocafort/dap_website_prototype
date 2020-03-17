@@ -48,3 +48,33 @@ class Package(models.Model):
 
     def __str__(self):
         return self.title
+
+
+def deadline():
+    return timezone.now() + timezone.timedelta(days=14)
+
+
+class Transaction(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    package = models.ForeignKey(Package, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
+    transaction_date = models.DateTimeField(default=timezone.now)
+
+    proof_of_payment = models.ImageField(blank=True, upload_to='proof_of_payment')
+    proof_of_payment_deadline = models.DateTimeField(default=deadline)
+    proof_of_payment_status = models.BooleanField('Verified', default=False)
+
+    is_overdue = models.BooleanField('Overdue', default=False)
+    is_finished = models.BooleanField('Finished', default=False)
+
+    flight_ticket = models.FileField(blank=True, upload_to='flight_tickets')
+
+    def getTotalPrice(self):
+        if self.package.discounted_price:
+            return self.package.discounted_price*self.quantity
+        else:
+            return self.package.price*self.quantity
+
+    def __str__(self):
+        return str(self.package)
