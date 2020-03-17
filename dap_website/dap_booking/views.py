@@ -39,6 +39,7 @@ class PackageListView(ListView):
     context_object_name = 'packages'
     ordering = ['-date_created']  # display the latest package created on top
 
+
 class PackageDetailView(DetailView):
     model = Package
     template_name = 'dap_booking/package.html'

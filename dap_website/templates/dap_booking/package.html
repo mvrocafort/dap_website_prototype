@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="container mt-5">
+          <div class="row mb-4">
+              <div class="col">
+                  <div class="card booking-card">
+                        <div class="media">
+                          <img class="d-flex mr-3" src="{{ package.package_display_picture.url }}" style="width: 360px; height: 210px">
+                          <div class="media-body">
+                            <div class="row mt-5">
+                                <div class="col">
+                                    <h3 class="card-title font-weight-bold text-center">{{ package.title }} <span class="badge badge-warning">New</span></h3>
+                                    <!-- Data -->
+                                    <h4 class="mb-2 text-center">
+                                        {% if package.discounted_price %}
+                                            <span class="mr-1"><del>₱{{ package.price|floatformat:0|intcomma }}</del></span>
+                                            <span>₱{{ package.discounted_price|floatformat:0|intcomma }}</span>
+                                        {% else %}
+                                            <span>₱{{ package.price|floatformat:0|intcomma }}</span>
+                                        {% endif %}
+                                    </h4>
+                                    <ul class="list-unstyled list-inline rating mb-2 text-center">
+                                      <li class="list-inline-item mr-1 font-large"><i class="far fa-calendar-alt mr-1"></i>{{ package.num_days }} DAYS</li>
+                                      <li class="list-inline-item mr-1 font-large"><i class="far fa-map mr-1"></i>{{ package.num_countries }} COUNTRIES</li>
+                                      <li class="list-inline-item mr-1 font-large"><i class="fas fa-map-marker-alt mr-1"></i>{{ package.num_cities }} CITIES</li>
+                                    </ul>
+                                    <p class="text-center">TRAVEL DATE: {{ package.travel_outbound_flight_date }} - {{ package.travel_inbound_flight_date }}</p>
+                                </div>
+
+                            </div>
+                          </div>
+                        </div>
+                  </div>
+              </div>
+          </div>
+          <div class="row mb-4">
+              <div class="col">
+                  <div class="card booking-card p-2">
+                      <strong>Package Inclusions:</strong>  {{ package.inclusions }}
+                  </div>
+              </div>
+          </div>
+          <div class="row mb-4">
+              <div class="col">
+                  <div class="card booking-card p-2">
+                      <strong>Package Exclusions:</strong>  {{ package.exclusions }}
+                  </div>
+              </div>
+          </div>
+          <div class="row mb-4">
+              <div class="col">
+                  <div class="card booking-card p-2">
+                      <strong>Terms and Conditions:</strong>  {{ package.terms_and_conditions }}
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+                  <div class="col" style="display:flex; justify-content: flex-end">
+                      <a href=""><button class="btn btn-info btn-lg">BOOK SLOT</button></a>
+                  </div>
+
+          </div>
+        </div>
+    </div>
+{% endblock content %}
