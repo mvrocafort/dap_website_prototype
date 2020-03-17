@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <!-- Horizontal Steppers -->
+<div class="row">
+  <div class="col-md-12">
+
+    <!-- Stepers Wrapper -->
+    <ul class="stepper stepper-horizontal">
+
+      <!-- First Step -->
+      <li class="completed">
+        <a href="#!">
+          <span class="circle">1</span>
+          <span class="label">Transaction Form</span>
+        </a>
+      </li>
+
+      <!-- Second Step -->
+      <li class="completed">
+        <a href="#!">
+          <span class="circle">2</span>
+          <span class="label">Passenger Form</span>
+        </a>
+      </li>
+
+      <!-- Third Step -->
+      <li>
+        <a href="#!">
+          <span class="circle">3</span>
+          <span class="label">Booking Summary</span>
+        </a>
+      </li>
+
+    </ul>
+    <!-- /.Stepers Wrapper -->
+
+  </div>
+</div>
+<!-- /.Horizontal Steppers -->
+    <div class="card mx-xl-5">
+        <div class="card-body">
+            <!-- Default form subscription -->
+            <form class="border border-light p-5" method="post">
+        {% csrf_token %}
+        {{ form.management_form }}
+        {% for field in form %}
+            <p class="h4 text-center py-4"  style="background-color: #eeeeee">Passenger Form {{ forloop.counter }}</p>
+          <p class="font-italic text-center">Please enter your complete name as it appears on your passport ID.</p>
+          {{ field|crispy }}
+        {% endfor %}
+        <a href=""><button class="btn btn-info btn-block my-4" type="submit">Submit</button></a>
+      </form>
+            <!-- Default form subscription -->
+        </div>
+    </div>
+
+
+
+{% endblock content %}

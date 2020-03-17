@@ -2,15 +2,23 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
+from django.forms import inlineformset_factory, DateInput
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 
 from django.conf import settings
-from .models import Package
+from .models import Package, Transaction, Passenger
 from .forms import UserRegisterForm, PurchaseForm
 
 
 # Create your views here.
+# We set the variable quantity as a global quantity so that we can
+# pass the quantity entered by the user from the purchase form to
+# the passenger form. The quantity will dictate the number of
+# formsets to be filled by the user in the passenger details
+quantity = "0"
+
+
 def login(request):
     return render(request, 'dap_booking/login.html')
 
@@ -60,9 +68,28 @@ def purchase(request, pk):
             post.package = package
             post.proof_of_payment_status = False
             post.save()
-            #global quantity
-            #quantity = post.quantity
-            return redirect('/')
+            global quantity
+            quantity = post.quantity
+            return redirect('dap_booking:passenger_details', post.id)
 
     context = {'form': form, 'package': package}
     return render(request, 'dap_booking/purchase_form.html', context)
+
+
+@login_required
+def passenger_details(request, pk):
+    PassengerFormSet = inlineformset_factory(Transaction, Passenger, fields=('last_name',
+                                                                             'first_name', 'middle_initial', 'birthday',
+                                                                             'gender', 'contact_number', 'email_address'), widgets={'birthday': DateInput(attrs={'type': 'date'})}, extra=quantity)
+    transaction = Transaction.objects.get(id=pk)
+    formset = PassengerFormSet(queryset=Passenger.objects.none(), instance=transaction)
+    # form = OrderForm(initial={'customer':customer})
+
+    if request.method == 'POST':
+        formset = PassengerFormSet(request.POST, instance=transaction)
+        if formset.is_valid():
+            formset.save()
+            messages.success(request, f'Your booking details have been saved. Please settle your payment before {transaction.proof_of_payment_deadline} to avoid conflicts.')
+            return redirect('/')
+    context = {'form': formset, 'quantity': quantity}
+    return render(request, 'dap_booking/passenger_form.html', context)

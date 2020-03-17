@@ -78,3 +78,23 @@ class Transaction(models.Model):
 
     def __str__(self):
         return str(self.package)
+
+
+class Passenger(models.Model):
+    GENDER = (
+        ('M', 'M'),
+        ('F', 'F'),
+    )
+
+    transaction = models.ForeignKey(Transaction, on_delete=models.CASCADE)
+
+    last_name = models.CharField(max_length=100, blank=False)
+    first_name = models.CharField(max_length=100, blank=False)
+    middle_initial = models.CharField(max_length=5, blank=False)
+    birthday = models.DateField(default=timezone.now, blank=False)
+    gender = models.CharField(choices=GENDER, default='M', max_length=1, blank=False)
+    contact_number = models.CharField(max_length=30, blank=False)
+    email_address = models.CharField(max_length=100, blank=False)
+
+    def __str__(self):
+        return self.first_name + " " + self.last_name
