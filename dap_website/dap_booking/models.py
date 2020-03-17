@@ -10,6 +10,7 @@ from django.utils import timezone
 def return_flight():
     return timezone.now() + timezone.timedelta(days=7)
 
+
 class Package(models.Model):
     TAG_CHOICES = (
         ('New', 'New'),
