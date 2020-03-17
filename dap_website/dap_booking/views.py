@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from django.conf import settings
 from .models import Package
@@ -36,3 +36,9 @@ def register(request):
 class PackageListView(ListView):
     model = Package
     template_name = 'dap_booking/home.html'
+    context_object_name = 'packages'
+    ordering = ['-date_created']  # display the latest package created on top
+
+class PackageDetailView(DetailView):
+    model = Package
+    template_name = 'dap_booking/package.html'

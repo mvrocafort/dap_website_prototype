@@ -1,4 +1,69 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load humanize %}
 
 {% block content %}
+    <div class="row justify-content-center">
+            <div class="row mt-5 mb-2">
+                <div class="jumbotron">
+                  <h2 class="display-4">Welcome, {{ user.first_name }}!</h2>
+                  <p class="lead">If you’re planning to visit the Philippines, you can rely on our experts to help you find the best hotels and tours available. Our innovative model allows you to create and plan your own customized trip. Alternatively, select one of our pre-designed packages. We will be with you every step of the way to ensure you have the dream vacation you deserve.</p>
+                  <hr class="my-4">
+                  <p>Not sure where to start? Build a package according to your desired holiday!</p>
+                  <a class="btn btn-outline-info btn-lg" href="" role="button">Create my own package</a>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                {% for package in packages %}
+                <div class="col-4" style="margin-bottom: 40px; min-width: 300px;">
+                    <!-- Card -->
+                    <div class="card booking-card" style="height: 570px">
+                      <!-- Card image -->
+                      <div class="view overlay" style="height: 200px">
+                        <img class="card-img-top" src="{{ package.package_display_picture.url }}" alt="Card image cap">
+                        <a href="{% url 'dap_booking:package' package.id %}">
+                          <div class="mask rgba-white-slight"></div>
+                        </a>
+                      </div>
+                      <!-- Card content -->
+                      <div class="card-body">
+                        <!-- Title -->
+                        <h4 class="card-title font-weight-bold text-center">
+                            <a href="{% url 'dap_booking:package' package.id %}" style="color: inherit">{{ package.title }} </a>
+                            {% if package.tag == 'New' %}
+                                <span class="badge badge-warning">
+                                    {{ package.tag }}
+                                </span>
+                            {% endif %}
+                            {% if package.tag == 'Hot' %}
+                                <span class="badge badge-danger">
+                                    {{ package.tag }}
+                                </span>
+                            {% endif %}
+
+                        </h4>
+                        <!-- Data -->
+                        <p class="mb-1 text-center">
+                            {% if package.discounted_price %}
+                                <span class="mr-1"><del>₱{{ package.price|floatformat:0|intcomma }}</del></span>
+                                <span>₱{{ package.discounted_price|floatformat:0|intcomma }}</span>
+                            {% else %}
+                                <span>₱{{ package.price|floatformat:0|intcomma }}</span>
+                            {% endif %}
+                        </p>
+                        <ul class="list-unstyled list-inline rating mb-2 text-center">
+                          <li class="list-inline-item mr-1 font-small"><i class="far fa-calendar-alt mr-1"></i>{{ package.num_days }} DAYS</li>
+                          <li class="list-inline-item mr-1 font-small"><i class="far fa-map mr-1"></i>{{ package.num_countries }} COUNTRIES</li>
+                          <li class="list-inline-item mr-1 font-small"><i class="fas fa-map-marker-alt mr-1"></i>{{ package.num_cities }} CITIES</li>
+                        </ul>
+                        <p class="font-smaller text-center">Travel Date: {{ package.travel_outbound_flight_date }} - {{ package.travel_outbound_flight_date }}</p>
+                        <!-- Text -->
+                        <p class="card-text text-justify">{{ package.description }}</p>
+                      </div>
+                    </div>
+                    <!-- Card -->
+                </div>
+                {% endfor %}
+            </div>
+    </div>
 {% endblock content %}
