@@ -1,0 +1,1 @@
+default_app_config = 'dap_booking.apps.DapBookingConfig'

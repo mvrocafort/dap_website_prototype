@@ -7,6 +7,14 @@ from django.db import models
 from django.utils import timezone
 
 
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(default='profile_pictures/default_profile_picture.jpg', upload_to='profile_pictures')
+
+    def __str__(self):
+        return f'{self.user.username} Profile'
+
+
 def return_flight():
     return timezone.now() + timezone.timedelta(days=7)
 

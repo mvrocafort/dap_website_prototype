@@ -20,7 +20,7 @@
   <!-- Your custom styles (optional) -->
 </head>
 <body>
-<!--Navbar -->
+  <!--Navbar -->
   <nav class="mb-1 navbar navbar-expand-lg navbar-dark lighten-1" style="background-color: rgb(55,56,55);">
     <a class="navbar-brand" href="{% url 'dap_booking:home' %}">
             <img src="{% static '/img/dap_logo/logo_for_navbar.png' %}" height="30" alt="mdb logo">
@@ -30,19 +30,19 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent-555">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home
-            <span class="sr-only">(current)</span>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
-        </li>
-      </ul>
+<!--      <ul class="navbar-nav mr-auto">-->
+<!--        <li class="nav-item active">-->
+<!--          <a class="nav-link" href="#">Home-->
+<!--            <span class="sr-only">(current)</span>-->
+<!--          </a>-->
+<!--        </li>-->
+<!--        <li class="nav-item">-->
+<!--          <a class="nav-link" href="#">Features</a>-->
+<!--        </li>-->
+<!--        <li class="nav-item">-->
+<!--          <a class="nav-link" href="#">Pricing</a>-->
+<!--        </li>-->
+<!--      </ul>-->
 
       <ul class="navbar-nav ml-auto nav-flex-icons">
       {% if user.is_authenticated %}
@@ -80,91 +80,79 @@
     </div>
   </nav>
   <!--/.Navbar -->
+
   <!-- Start your project here-->  
   {% block content %}
   {% endblock content %}
   <!-- End your project here-->
-    <!-- Footer -->
-    <footer class="page-footer font-small pt-4" style="background-color: rgb(55,56,55); margin-top: 200px">
-        <div class="container">
-        <!-- Social buttons -->
-        <ul class="list-unstyled list-inline text-center">
-          <li class="list-inline-item">
-            <a class="btn-floating btn-fb mx-1">
-              <i class="fab fa-facebook-f"> </i>
-            </a>
-          </li>
-          <li class="list-inline-item">
-            <a class="btn-floating btn-tw mx-1">
-              <i class="fab fa-twitter"> </i>
-            </a>
-          </li>
-          <li class="list-inline-item">
-            <a class="btn-floating btn-gplus mx-1">
-              <i class="fab fa-google-plus-g"> </i>
-            </a>
-          </li>
-          <li class="list-inline-item">
-            <a class="btn-floating btn-li mx-1">
-              <i class="fab fa-linkedin-in"> </i>
-            </a>
-          </li>
-          <li class="list-inline-item">
-            <a class="btn-floating btn-dribbble mx-1">
-              <i class="fab fa-dribbble"> </i>
-            </a>
-          </li>
-        </ul>
-        <!-- Social buttons -->
 
-        </div>
-
-      <!-- Footer Text -->
-      <div class="container-fluid text-center text-md-left">
-
-        <!-- Grid row -->
-        <div class="row ml-3 mt-3">
-
-          <!-- Grid column -->
-          <div class="col-md-6 mt-md-0 mt-3">
-
-            <!-- Content -->
-            <h5 class="text-uppercase font-weight-bold">Footer text 1</h5>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita sapiente sint, nulla, nihil
-              repudiandae commodi voluptatibus corrupti animi sequi aliquid magnam debitis, maxime quam recusandae
-              harum esse fugiat. Itaque, culpa?</p>
-
-          </div>
-          <!-- Grid column -->
-
-          <hr class="clearfix w-100 d-md-none pb-3">
-
-          <!-- Grid column -->
-          <div class="col-md-6 mb-md-0 mb-3">
-
-            <!-- Content -->
-            <h5 class="text-uppercase font-weight-bold">Footer text 2</h5>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Optio deserunt fuga perferendis modi earum
-              commodi aperiam temporibus quod nulla nesciunt aliquid debitis ullam omnis quos ipsam, aspernatur id
-              excepturi hic.</p>
-
-          </div>
-          <!-- Grid column -->
-
-        </div>
-        <!-- Grid row -->
-
+  <!-- Footer -->
+  <footer class="page-footer font-small pt-4" style="background-color: rgb(55,56,55); margin-top: 200px">
+      <div class="container">
+      <!-- Social buttons -->
+      <ul class="list-unstyled list-inline text-center">
+        <li class="list-inline-item">
+          <a class="btn-floating btn-fb mx-1">
+            <i class="fab fa-facebook-f"> </i>
+          </a>
+        </li>
+        <li class="list-inline-item">
+          <a class="btn-floating btn-tw mx-1">
+            <i class="fab fa-twitter"> </i>
+          </a>
+        </li>
+        <li class="list-inline-item">
+          <a class="btn-floating btn-gplus mx-1">
+            <i class="fab fa-google-plus-g"> </i>
+          </a>
+        </li>
+        <li class="list-inline-item">
+          <a class="btn-floating btn-li mx-1">
+            <i class="fab fa-linkedin-in"> </i>
+          </a>
+        </li>
+        <li class="list-inline-item">
+          <a class="btn-floating btn-dribbble mx-1">
+            <i class="fab fa-dribbble"> </i>
+          </a>
+        </li>
+      </ul>
+      <!-- Social buttons -->
       </div>
-      <!-- Footer Text -->
-
-      <!-- Copyright -->
-      <div class="footer-copyright text-center py-3">© 2020 Copyright:
-        <a href="https://mdbootstrap.com/education/bootstrap/"> Discover Asia Philippines </a>
+    <!-- Footer Text -->
+    <div class="container-fluid text-center text-md-left">
+      <!-- Grid row -->
+      <div class="row ml-3 mt-3">
+        <!-- Grid column -->
+        <div class="col-md-6 mt-md-0 mt-3">
+          <!-- Content -->
+          <h5 class="text-uppercase font-weight-bold">Footer text 1</h5>
+          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Expedita sapiente sint, nulla, nihil
+            repudiandae commodi voluptatibus corrupti animi sequi aliquid magnam debitis, maxime quam recusandae
+            harum esse fugiat. Itaque, culpa?</p>
+        </div>
+        <!-- Grid column -->
+        <hr class="clearfix w-100 d-md-none pb-3">
+        <!-- Grid column -->
+        <div class="col-md-6 mb-md-0 mb-3">
+          <!-- Content -->
+          <h5 class="text-uppercase font-weight-bold">Footer text 2</h5>
+          <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Optio deserunt fuga perferendis modi earum
+            commodi aperiam temporibus quod nulla nesciunt aliquid debitis ullam omnis quos ipsam, aspernatur id
+            excepturi hic.</p>
+        </div>
+        <!-- Grid column -->
       </div>
-      <!-- Copyright -->
-
-    </footer>
-    <!-- Footer -->
+      <!-- Grid row -->
+    </div>
+    <!-- Footer Text -->
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">© 2020 Copyright:
+      <a href=""> Discover Asia Philippines </a>
+    </div>
+    <!-- Copyright -->
+  </footer>
+  <!-- Footer -->
 
   <!-- jQuery -->
   <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
