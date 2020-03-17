@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+{% block content %}
+    <div class="container mt-5">
+        <div class="row mb-4">
+            <div class="col">
+              <div class="card passenger-card">
+                    <div class="media">
+                      <div class="media-body p-3">
+                        <table class="table table-sm table-borderless" width="100%">
+                          <tbody>
+                            <tr>
+                              <th class="th-sm" colspan="2" style="font-size: xx-large">Booking Summary</th>
+                            </tr>
+                            <tr>
+                                <td><strong>Transaction ID:</strong> {{ transaction.id }}</td>
+                                <td style="text-align: end"><strong>Transaction Date:</strong> {{ transaction.transaction_date }}</td>
+                            </tr>
+
+                          </tbody>
+                        </table>
+                          <hr>
+                        <table class="table table-sm table-borderless" width="100%">
+                          <tbody>
+                            <tr style="background-color: #eeeeee">
+                              <th class="th-sm" colspan="2" style="font-size: large">Package Details</th>
+                            </tr>
+                            <tr>
+                                <td><strong>Package:</strong> {{ transaction.package.title }}</td>
+                                <td style="text-align: end"><strong>Package ID:</strong> {{ transaction.package.id }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Travel Date:</strong> {{ transaction.package.travel_outbound_flight_date }} - {{ transaction.package.travel_outbound_flight_date }}</td>
+                                <td style="text-align: end"><strong>Days of Stay:</strong> {{ transaction.package.num_days }} days</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><strong>Package Inclusions:</strong> {{ transaction.package.inclusions }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><strong>Package Exclusions:</strong> {{ transaction.package.exclusions }}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><strong>Terms and Conditions:</strong> {{ transaction.package.terms_and_conditions }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                          <hr>
+                        <table class="table table-sm table-borderless" width="100%">
+                          <thead>
+                            <tr style="background-color: #eeeeee">
+                              <th class="th-sm" colspan="6" style="font-size: large">Passenger Details</th>
+                            </tr>
+                          </thead>
+                          <tbody class="text-center">
+                            <tr>
+                              <th class="th-sm">Name</th>
+                              <th class="th-sm">Gender</th>
+                              <th class="th-sm">Birthday</th>
+                              <th class="th-sm">Contact Number</th>
+                              <th class="th-sm">Email Address</th>
+                            </tr>
+                            {% for passenger in passengers %}
+                                <tr>
+                                  <td>{{ passenger.last_name|upper }}, {{ passenger.first_name|upper }} {{ passenger.middle_initial|upper }}</td>
+                                  <td>{{ passenger.gender|upper }}</td>
+                                  <td>{{ passenger.birthday }}</td>
+                                  <td>{{ passenger.contact_number }}</td>
+                                  <td>{{ passenger.email_address }}</td>
+                                </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+
+                        <hr>
+                        <table class="table table-sm table-borderless" width="100%">
+                          <tbody>
+                            <tr style="background-color: #eeeeee">
+                              <th class="th-sm" colspan="3" style="font-size: large">Payment Details</th>
+                            </tr>
+                            <tr>
+                                <td><strong>Breakdown:</strong><table class="table-sm table-borderless text-center">
+                                    <thead>
+                                <th>Package Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                            </thead>
+                            <tr>
+                                <td>
+                                  {% if transaction.package.discounted_price %}
+                                            ₱{{ transaction.package.discounted_price|floatformat:0|intcomma }}
+                                  {% else %}
+                                            ₱{{ transaction.package.price|floatformat:0|intcomma }}
+                                  {% endif %}
+                                </td>
+                                <td class="text-center">{{ transaction.quantity }}</td>
+                                <td class="text-center">₱{{ transaction.getTotalPrice|floatformat:0|intcomma }}</td>
+                            </tr>
+                                </table></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>Payment Status: </strong>
+                                        {% if transaction.proof_of_payment %}
+                                            {% if transaction.proof_of_payment_status == False %}
+                                                For Verification
+                                            {% else %}
+                                                Verified
+                                            {% endif %}
+                                        {% else %}
+                                            Pending
+                                        {% endif %}
+                                </td>
+                                <td style="display:flex; justify-content: flex-end">
+                                    <strong>Payment Deadline: </strong>{{ transaction.proof_of_payment_deadline }}
+                                </td>
+                            </tr>
+                          <tr>
+                              <td style="text-align: center" colspan="2">
+                                    {% if transaction.proof_of_payment %}
+                                        <img class="rounded float-left img-fluid z-depth-1 img-thumbnail" src="{{ transaction.proof_of_payment.url }}" style="width: 100%; height: 175px">
+                                        {% if transaction.proof_of_payment_status == False %}
+                                            <p class="font-italic text-center" style="background-color: red; color: white">Your Proof of Payment is currently being verified.</p>
+                                        {% else %}
+                                            <p class="font-italic text-center" style="background-color: green; color: white">Your Proof of Payment has been verified.</p>
+                                        {% endif %}
+                                    {% else %}
+                                        <form method="POST" enctype="multipart/form-data">
+                                      {% csrf_token %}
+                                          <strong>{{ form.proof_of_payment|as_crispy_field }}</strong>
+
+                                          <button class="btn btn-outline-info btn-sm" type="submit">Submit</button>
+                                  </form>
+                                    {% endif %}
+                              </td>
+                          </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if transaction.flight_ticket %}
+        <div class="container mt-5">
+        <div class="row mb-4 justify-content-center">
+            <div class="col">
+              <div class="card passenger-card">
+                    <div class="media">
+                      <div class="media-body p-3" style="height: 100%; width: 100%">
+                          <h2 class="mb-3 text-center" style="background-color: #eeeeee;">Flight Tickets</h2>
+                          <embed src="{{ transaction.flight_ticket.url }}" type="application/pdf" style="height: 1110px; width: 100%">
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+{% endblock %}

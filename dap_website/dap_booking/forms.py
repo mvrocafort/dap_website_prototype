@@ -28,3 +28,9 @@ class PurchaseForm(ModelForm):
             raise forms.ValidationError("You have entered an invalid quantity.")
         else:
             return quantity
+
+
+class ProofOfPaymentForm(ModelForm):
+    class Meta:
+        model = Transaction
+        fields = ['proof_of_payment']

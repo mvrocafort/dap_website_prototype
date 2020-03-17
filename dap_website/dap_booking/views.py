@@ -8,7 +8,7 @@ from django.views.generic import ListView, DetailView
 
 from django.conf import settings
 from .models import Package, Transaction, Passenger
-from .forms import UserRegisterForm, PurchaseForm
+from .forms import UserRegisterForm, PurchaseForm, ProofOfPaymentForm
 
 
 # Create your views here.
@@ -90,6 +90,26 @@ def passenger_details(request, pk):
         if formset.is_valid():
             formset.save()
             messages.success(request, f'Your booking details have been saved. Please settle your payment before {transaction.proof_of_payment_deadline} to avoid conflicts.')
-            return redirect('/')
+            return redirect('dap_booking:transaction_details', transaction.id)
     context = {'form': formset, 'quantity': quantity}
     return render(request, 'dap_booking/passenger_form.html', context)
+
+
+@login_required
+def transaction_details(request, pk):
+    transaction = Transaction.objects.get(id=pk)
+    passengers = transaction.passenger_set.all()
+
+    if request.method == 'POST':
+        form = ProofOfPaymentForm(request.POST,
+                                       request.FILES,
+                                       instance=transaction)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Your proof of payment has been uploaded!')
+            return redirect('dap_booking:transaction_details', transaction.id)
+
+    else:
+        form = ProofOfPaymentForm(instance=transaction)
+    context = {'passengers': passengers, 'transaction': transaction, 'form': form}
+    return render(request, 'dap_booking/transaction_details.html', context)
