@@ -9,6 +9,7 @@ urlpatterns = [
     path('package/<str:pk>/', views.PackageDetailView.as_view(), name='package'),
 
     path('register', views.register, name='register'),
+    path('profile', views.profile, name='profile'),
     path('login', auth_views.LoginView.as_view(template_name='dap_booking/login.html'), name='login'),
     path('logout', auth_views.LogoutView.as_view(template_name='dap_booking/logout.html'), name='logout'),
 

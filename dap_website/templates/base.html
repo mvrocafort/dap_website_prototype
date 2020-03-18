@@ -56,11 +56,11 @@
         <li class="nav-item avatar dropdown">
           <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-            <img src="" class="rounded-circle z-depth-0"
+            <img src="{{ user.userprofile.image.url }}" class="rounded-circle z-depth-0"
               alt="avatar image" height="30" width="30">
           </a>
           <div class="dropdown-menu dropdown-menu-right" style="width: 50px">
-            <a class="dropdown-item" href="">Profile</a>
+            <a class="dropdown-item" href="{% url 'dap_booking:profile' %}">Profile</a>
             <a class="dropdown-item" href="{% url 'dap_booking:logout' %}">Log Out</a>
           </div>
         </li>

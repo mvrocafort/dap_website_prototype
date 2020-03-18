@@ -8,7 +8,7 @@ from django.views.generic import ListView, DetailView
 
 from django.conf import settings
 from .models import Package, Transaction, Passenger
-from .forms import UserRegisterForm, PurchaseForm, ProofOfPaymentForm
+from .forms import UserRegisterForm, UserProfileUpdateForm, UserUpdateForm, PurchaseForm, ProofOfPaymentForm
 
 
 # Create your views here.
@@ -41,6 +41,29 @@ def register(request):
     else:
         form = UserRegisterForm()
     return render(request, 'dap_booking/register.html', {'form': form})
+
+
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        p_form = UserProfileUpdateForm(request.POST,
+                                       request.FILES,
+                                       instance=request.user.userprofile)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request, f'Your account has been updated!')
+            return redirect('dap_booking:profile')
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = UserProfileUpdateForm(instance=request.user.userprofile)
+
+    context = {
+        'u_form': u_form,
+        'p_form': p_form
+    }
+    return render(request, 'dap_booking/profile.html', context)
 
 
 class PackageListView(ListView):
