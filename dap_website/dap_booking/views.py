@@ -83,7 +83,6 @@ def passenger_details(request, pk):
                                                                              'gender', 'contact_number', 'email_address'), widgets={'birthday': DateInput(attrs={'type': 'date'})}, extra=quantity)
     transaction = Transaction.objects.get(id=pk)
     formset = PassengerFormSet(queryset=Passenger.objects.none(), instance=transaction)
-    # form = OrderForm(initial={'customer':customer})
 
     if request.method == 'POST':
         formset = PassengerFormSet(request.POST, instance=transaction)
