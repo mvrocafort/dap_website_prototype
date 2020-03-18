@@ -80,6 +80,16 @@
     </div>
   </nav>
   <!--/.Navbar -->
+  {% if messages %}
+  {% for message in messages %}
+      <div class="alert alert-success alert-dismissible text-center fade show alert-{{ message.tags }}" role="alert">
+          {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+  {% endfor %}
+  {% endif %}
 
   <!-- Start your project here-->
   <div class="container">
