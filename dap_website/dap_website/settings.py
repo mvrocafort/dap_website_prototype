@@ -75,6 +75,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'dap_booking.context_processors.unsettled_booking_count',
+                'dap_booking.context_processors.pending_custom_package_request_count',
             ],
         },
     },

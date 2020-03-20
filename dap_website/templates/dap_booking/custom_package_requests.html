@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row mb-4">
+            <div class="col">
+              <div class="card booking-card">
+                    <table class="table table-hover table-bordered table-sm text-center" cellspacing="0">
+                          <thead>
+                            <tr>
+                                <th class="th-sm special-color" style="color: white" colspan="9">MY CUSTOM PACKAGES</th>
+                            </tr>
+                            <tr>
+                              <th class="th-sm">Custom Package ID</th>
+                              <th class="th-sm">Date Requested</th>
+                              <th class="th-sm">Package</th>
+                              <th class="th-sm">Budget</th>
+                              <th class="th-sm">Quantity</th>
+                              <th class="th-sm">Flight Tickets</th>
+                              <th class="th-sm">Hotel Accommodation</th>
+                              <th class="th-sm">Travel Insurance</th>
+                              <th class="th-sm">Travel Voucher</th>
+                                <th></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% if pending_custom_package_request_count == 0 %}
+                            <tr>
+                                <td colspan="9">You have no custom package requests yet.</td>
+                            </tr>
+                            {% else %}
+                                {% for custom_package in custom_packages %}
+                                    <tr>
+                                  <td>
+                                      <a href="{% url 'dap_booking:bookings' custom_package.id %}">{{ custom_package.id }}</a>
+                                  </td>
+                                  <td>
+                                      <a href="{% url 'dap_booking:bookings' custom_package.id %}">{{ custom_package.request_date }}</a>
+                                  </td>
+                                  <td>
+                                      <a href="{% url 'dap_booking:bookings' custom_package.id %}">{{ custom_package.title }}</a>
+                                  </td>
+                                  <td>
+                                      <a href="{% url 'dap_booking:bookings' custom_package.id %}">₱{{ custom_package.budget|floatformat:0|intcomma }}</a>
+                                  </td>
+                                  <td>
+                                      <a href="{% url 'dap_booking:bookings' custom_package.id %}">{{ custom_package.quantity }}</a>
+                                  </td>
+                                  <td>
+                                      <a href="{% url 'dap_booking:bookings' custom_package.id %}">
+                                          {% if custom_package.flight_ticket == True %}
+                                            <i class="fas fa-check-circle" style="color: green"></i>
+                                          {% else %}
+                                            <i class="fas fa-times-circle" style="color: red"></i>
+                                          {% endif %}
+                                      </a>
+                                  </td>
+                                    <td>
+                                      <a href="{% url 'dap_booking:bookings' custom_package.id %}">
+                                          {% if custom_package.hotel == True %}
+                                            <i class="fas fa-check-circle" style="color: green"></i>
+                                          {% else %}
+                                            <i class="fas fa-times-circle" style="color: red"></i>
+                                          {% endif %}
+                                      </a>
+                                  </td>
+                                    <td>
+                                      <a href="{% url 'dap_booking:bookings' custom_package.id %}">
+                                          {% if custom_package.travel_insurance == True %}
+                                            <i class="fas fa-check-circle" style="color: green"></i>
+                                          {% else %}
+                                            <i class="fas fa-times-circle" style="color: red"></i>
+                                          {% endif %}
+                                      </a>
+                                  </td>
+                                    <td>
+                                      <a href="{% url 'dap_booking:bookings' custom_package.id %}">
+                                          {% if custom_package.travel_voucher == True %}
+                                            <i class="fas fa-check-circle" style="color: green"></i>
+                                          {% else %}
+                                            <i class="fas fa-times-circle" style="color: red"></i>
+                                          {% endif %}
+                                      </a>
+                                  </td>
+
+                        </tr>
+                                {% endfor %}
+                            {% endif %}
+                          </tbody>
+                        </table>
+              </div>
+            </div>
+        </div>
+        <div class="row">
+          <div class="col" style="display:flex; justify-content: flex-end">
+              <a href="{% url 'dap_booking:bookings' user.id %}"><button class="btn btn-info btn-md waves-effect waves-light">BACK TO BOOKINGS</button></a>
+          </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+{% endblock content %}
+

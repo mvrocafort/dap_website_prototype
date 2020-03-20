@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -8,7 +10,14 @@ from django.views.generic import ListView, DetailView
 
 from django.conf import settings
 from .models import Package, Transaction, Passenger
-from .forms import UserRegisterForm, UserProfileUpdateForm, UserUpdateForm, PurchaseForm, ProofOfPaymentForm
+from .forms import (
+    UserRegisterForm,
+    UserProfileUpdateForm,
+    UserUpdateForm,
+    PurchaseForm,
+    ProofOfPaymentForm,
+    CustomPackageRequestForm
+)
 
 
 # Create your views here.
@@ -135,3 +144,56 @@ def transaction_details(request, pk):
         form = ProofOfPaymentForm(instance=transaction)
     context = {'passengers': passengers, 'transaction': transaction, 'form': form}
     return render(request, 'dap_booking/transaction_details.html', context)
+
+
+@login_required
+def bookings(request, pk):
+    user = User.objects.get(id=pk)
+    bookings = user.transaction_set.all().order_by('proof_of_payment_status')
+    #custom_packages = user.custompackagerequest_set.all().order_by('-request_date')
+
+    context = {
+        'user': user,
+        'bookings': bookings,
+        #'custom_packages': custom_packages,
+    }
+    return render(request, 'dap_booking/bookings.html', context)
+
+
+@login_required
+def custom_package_request(request):
+    user = User.objects.get(username=request.user.username)
+    form = CustomPackageRequestForm(initial={'user': user})
+
+    if request.method == 'POST':
+        # print('Printing POST:', request.POST)
+        form = CustomPackageRequestForm(request.POST, initial={'user': user})
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = request.user
+            post.save()
+
+            # send_mail(subject, message, from_email, to_list, fail_silently=True)
+            subject = f'Discover Asia Philippines'
+            message = f'Your custom package has been saved. Details: {post.origin} to {post.destination}.'
+            from_email = settings.EMAIL_HOST_USER
+            to_list = ['mrocafort20@gmail.com', form.cleaned_data['email_address']]
+            #send_mail(subject, message, from_email, to_list, fail_silently=False)
+
+            messages.success(request, f'Package Request has been sent to the admin. Please wait for an email.')
+            return redirect('/')
+
+    context = {'form': form}
+    return render(request, 'dap_booking/custom_package_form.html', context)
+
+
+@login_required
+def custom_package_request_bookings(request, pk):
+    user = User.objects.get(id=pk)
+    custom_packages = user.custompackagerequest_set.all().order_by('-request_date')
+
+    context = {
+        'user': user,
+        'custom_packages': custom_packages,
+    }
+    return render(request, 'dap_booking/custom_package_requests.html', context)

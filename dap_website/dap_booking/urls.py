@@ -16,4 +16,9 @@ urlpatterns = [
     path('purchase/<str:pk>/', views.purchase, name='purchase'),
     path('passenger/details/<str:pk>/', views.passenger_details, name='passenger_details'),
     path('transaction/details/<str:pk>/', views.transaction_details, name='transaction_details'),
+
+    path('custom_package_request/', views.custom_package_request, name='custom_package_request'),
+
+    path('bookings/<str:pk>/', views.bookings, name='bookings'),
+    path('custom_package_request_bookings/<str:pk>/', views.custom_package_request_bookings, name='custom_package_request_bookings'),
 ]

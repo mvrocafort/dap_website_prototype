@@ -10,7 +10,7 @@
                   <p class="lead">If you’re planning to visit the Philippines, you can rely on our experts to help you find the best hotels and tours available. Our innovative model allows you to create and plan your own customized trip. Alternatively, select one of our pre-designed packages. We will be with you every step of the way to ensure you have the dream vacation you deserve.</p>
                   <hr class="my-4">
                   <p>Not sure where to start? Build a package according to your desired holiday!</p>
-                  <a class="btn btn-outline-info btn-lg" href="" role="button">Create my own package</a>
+                  <a class="btn btn-outline-info btn-lg" href="{% url 'dap_booking:custom_package_request' %}" role="button">Create my own package</a>
                 </div>
             </div>
             <div class="row justify-content-center">
@@ -40,7 +40,6 @@
                                     {{ package.tag }}
                                 </span>
                             {% endif %}
-
                         </h4>
                         <!-- Data -->
                         <p class="mb-1 text-center">

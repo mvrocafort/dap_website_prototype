@@ -47,7 +47,7 @@
       <ul class="navbar-nav ml-auto nav-flex-icons">
       {% if user.is_authenticated %}
         <li>
-          <form action="">
+          <form action="{% url 'dap_booking:bookings' user.id %}">
             <button class="btn btn-light btn-sm">
               My Bookings <span class="badge badge-danger ml-2">{{ unsettled_booking_count }}</span>
             </button>
@@ -176,6 +176,7 @@
   <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
   <!-- Your custom scripts (optional) -->
   <script type="text/javascript"></script>
+
 
 </body>
 </html>

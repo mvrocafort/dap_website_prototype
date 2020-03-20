@@ -98,3 +98,47 @@ class Passenger(models.Model):
 
     def __str__(self):
         return self.first_name + " " + self.last_name
+
+
+class CustomPackageRequest(models.Model):
+    REQUEST_STATUS = (
+        ('Approved', 'Approved'),
+        ('Processing', 'Processing'),
+    )
+    BOOKING_STATUS = (
+        ('Booked', 'Booked'),
+        ('Pending', 'Pending'),
+    )
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    request_date = models.DateTimeField(default=timezone.now)
+
+    title = models.CharField(max_length=100, default='My Custom Package')
+    budget = models.CharField(max_length=100)
+    quantity = models.IntegerField(default=1)
+
+    flight_ticket = models.BooleanField(default=False, blank=True)
+    origin = models.CharField(max_length=100, blank=True)
+    destination = models.CharField(max_length=100, blank=True)
+    travel_outbound_flight_date = models.DateField(default=timezone.now)
+    travel_inbound_flight_date = models.DateField(default=timezone.now)
+
+    hotel = models.BooleanField(default=False, blank=True)
+
+    travel_voucher = models.BooleanField(default=False, blank=True)
+    travel_insurance = models.BooleanField(default=False, blank=True)
+
+    additional_notes = models.TextField(max_length=500, verbose_name='Additional Notes / Special Requests', blank=True)
+
+    contact_person = models.CharField(max_length=100, blank=False)
+    contact_number = models.CharField(max_length=30, blank=False)
+    email_address = models.CharField(max_length=100, blank=False)
+    preferred_date = models.DateField(default=timezone.now)
+    preferred_time = models.TimeField(default=timezone.now)
+
+    request_status = models.CharField(choices=REQUEST_STATUS, default='Processing', max_length=50)
+    booking_status = models.CharField(choices=BOOKING_STATUS, default='Pending', max_length=50)
+
+    def __str__(self):
+        return self.title + " - " + str(self.id) + " - " + str(self.request_date)
