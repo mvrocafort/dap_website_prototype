@@ -8,7 +8,7 @@ def unsettled_booking_count(request):
 
 def pending_custom_package_request_count(request):
     #count = Transaction.objects.filter(user__username=request.user.username, proof_of_payment_status=False).count()
-    count = CustomPackageRequest.objects.filter(user__username=request.user.username, request_status='Pending').count()
+    count = CustomPackageRequest.objects.filter(user__username=request.user.username, request_status='Processing').count()
     return {'pending_custom_package_request_count': count}
 
 

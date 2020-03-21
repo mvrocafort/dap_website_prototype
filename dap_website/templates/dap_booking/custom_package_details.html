@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+{% block content %}
+    <div class="container mt-5">
+        <div class="row mb-4">
+            <div class="col">
+              <div class="card passenger-card">
+                    <div class="media">
+                      <div class="media-body p-3">
+                        <table class="table table-sm table-borderless" width="100%">
+                          <tbody>
+                            <tr>
+                              <th class="th-sm" colspan="2" style="font-size: xx-large">Custom Package Summary</th>
+                            </tr>
+                            <tr>
+                                <td><strong>Custom Package ID:</strong> {{ custom_package.id }}</td>
+                                <td style="text-align: end"><strong>Date Requested:</strong> {{ custom_package.request_date }}</td>
+                            </tr>
+
+                          </tbody>
+                        </table>
+                          <hr>
+                        <table class="table table-sm table-borderless" width="100%">
+                          <tbody>
+                            <tr style="background-color: #eeeeee">
+                              <th class="th-sm" colspan="2" style="font-size: large">Custom Package Details</th>
+                            </tr>
+                            <tr>
+                                <td><strong>Package:</strong> {{ custom_package.title }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Budget:</strong> ₱{{ custom_package.budget|floatformat:0|intcomma }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Quantity:</strong> {{ custom_package.quantity }}</td>
+                            </tr>
+                            <tr>
+
+                                <td colspan="2"><strong>Package Inclusions: </strong>
+
+                                    {% if custom_package.flight_ticket == True %}
+                                        <i class="fas fa-check-circle" style="color: green"></i> Flight Tickets ({{ custom_package.origin }} to {{ custom_package.destination }})
+                                    {% else %}
+                                        <i class="fas fa-times-circle" style="color: red"></i> Flight Tickets ({{ custom_package.origin }} to {{ custom_package.destination }})
+                                    {% endif %}
+                                    {% if custom_package.hotel == True %}
+                                        <i class="fas fa-check-circle" style="color: green"></i> Hotel Accommodation
+                                    {% else %}
+                                        <i class="fas fa-times-circle" style="color: red"></i> Hotel Accommodation
+                                    {% endif %}
+                                    {% if custom_package.travel_voucher == True %}
+                                        <i class="fas fa-check-circle" style="color: green"></i> Travel Voucher
+                                    {% else %}
+                                        <i class="fas fa-times-circle" style="color: red"></i> Travel Voucher
+                                    {% endif %}
+                                    {% if custom_package.travel_insurance == True %}
+                                        <i class="fas fa-check-circle" style="color: green"></i> Travel Insurance
+                                    {% else %}
+                                        <i class="fas fa-times-circle" style="color: red"></i> Travel Insurance
+                                    {% endif %}
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><strong>Additional Notes / Special Requests:</strong>  {{ custom_package.additional_notes }} </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                          <hr>
+                        <table class="table table-sm table-borderless" width="100%">
+                          <tbody>
+                            <tr style="background-color: #eeeeee">
+                              <th class="th-sm" colspan="3" style="font-size: large">Contact Person</th>
+                            </tr>
+                            <tr>
+                                <td><strong>Name:</strong> {{ custom_package.contact_person }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Contact Number:</strong> {{ custom_package.contact_number }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Email Address:</strong> {{ custom_package.email_address}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <hr>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

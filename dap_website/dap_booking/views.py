@@ -9,7 +9,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 
 from django.conf import settings
-from .models import Package, Transaction, Passenger
+from .models import Package, Transaction, Passenger, CustomPackageRequest
 from .forms import (
     UserRegisterForm,
     UserProfileUpdateForm,
@@ -191,9 +191,17 @@ def custom_package_request(request):
 def custom_package_request_bookings(request, pk):
     user = User.objects.get(id=pk)
     custom_packages = user.custompackagerequest_set.all().order_by('-request_date')
-
+    print(CustomPackageRequest.objects.filter(user__username=request.user.username, request_status='Pending').count())
     context = {
         'user': user,
         'custom_packages': custom_packages,
     }
     return render(request, 'dap_booking/custom_package_requests.html', context)
+
+
+@login_required
+def custom_package_request_details(request, pk):
+    custom_package = CustomPackageRequest.objects.get(id=pk)
+    
+    context = {'custom_package': custom_package}
+    return render(request, 'dap_booking/custom_package_details.html', context)

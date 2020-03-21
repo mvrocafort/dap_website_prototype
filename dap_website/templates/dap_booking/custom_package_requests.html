@@ -32,60 +32,59 @@
                             </tr>
                             {% else %}
                                 {% for custom_package in custom_packages %}
-                                    <tr>
-                                  <td>
-                                      <a href="{% url 'dap_booking:bookings' custom_package.id %}">{{ custom_package.id }}</a>
-                                  </td>
-                                  <td>
-                                      <a href="{% url 'dap_booking:bookings' custom_package.id %}">{{ custom_package.request_date }}</a>
-                                  </td>
-                                  <td>
-                                      <a href="{% url 'dap_booking:bookings' custom_package.id %}">{{ custom_package.title }}</a>
-                                  </td>
-                                  <td>
-                                      <a href="{% url 'dap_booking:bookings' custom_package.id %}">₱{{ custom_package.budget|floatformat:0|intcomma }}</a>
-                                  </td>
-                                  <td>
-                                      <a href="{% url 'dap_booking:bookings' custom_package.id %}">{{ custom_package.quantity }}</a>
-                                  </td>
-                                  <td>
-                                      <a href="{% url 'dap_booking:bookings' custom_package.id %}">
-                                          {% if custom_package.flight_ticket == True %}
-                                            <i class="fas fa-check-circle" style="color: green"></i>
-                                          {% else %}
-                                            <i class="fas fa-times-circle" style="color: red"></i>
-                                          {% endif %}
-                                      </a>
-                                  </td>
+                                  <tr>
                                     <td>
-                                      <a href="{% url 'dap_booking:bookings' custom_package.id %}">
-                                          {% if custom_package.hotel == True %}
-                                            <i class="fas fa-check-circle" style="color: green"></i>
-                                          {% else %}
-                                            <i class="fas fa-times-circle" style="color: red"></i>
-                                          {% endif %}
-                                      </a>
-                                  </td>
+                                        <a href="{% url 'dap_booking:custom_package_request_details' custom_package.id %}">{{ custom_package.id }}</a>
+                                    </td>
                                     <td>
-                                      <a href="{% url 'dap_booking:bookings' custom_package.id %}">
-                                          {% if custom_package.travel_insurance == True %}
-                                            <i class="fas fa-check-circle" style="color: green"></i>
-                                          {% else %}
-                                            <i class="fas fa-times-circle" style="color: red"></i>
-                                          {% endif %}
-                                      </a>
-                                  </td>
+                                        <a href="{% url 'dap_booking:custom_package_request_details' custom_package.id %}">{{ custom_package.request_date }}</a>
+                                    </td>
                                     <td>
-                                      <a href="{% url 'dap_booking:bookings' custom_package.id %}">
-                                          {% if custom_package.travel_voucher == True %}
-                                            <i class="fas fa-check-circle" style="color: green"></i>
-                                          {% else %}
-                                            <i class="fas fa-times-circle" style="color: red"></i>
-                                          {% endif %}
-                                      </a>
-                                  </td>
-
-                        </tr>
+                                        <a href="{% url 'dap_booking:custom_package_request_details' custom_package.id %}">{{ custom_package.title }}</a>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'dap_booking:custom_package_request_details' custom_package.id %}">₱{{ custom_package.budget|floatformat:0|intcomma }}</a>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'dap_booking:custom_package_request_details' custom_package.id %}">{{ custom_package.quantity }}</a>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'dap_booking:custom_package_request_details' custom_package.id %}">
+                                            {% if custom_package.flight_ticket == True %}
+                                              <i class="fas fa-check-circle" style="color: green"></i>
+                                            {% else %}
+                                              <i class="fas fa-times-circle" style="color: red"></i>
+                                            {% endif %}
+                                        </a>
+                                    </td>
+                                      <td>
+                                        <a href="{% url 'dap_booking:custom_package_request_details' custom_package.id %}">
+                                            {% if custom_package.hotel == True %}
+                                              <i class="fas fa-check-circle" style="color: green"></i>
+                                            {% else %}
+                                              <i class="fas fa-times-circle" style="color: red"></i>
+                                            {% endif %}
+                                        </a>
+                                    </td>
+                                      <td>
+                                        <a href="{% url 'dap_booking:custom_package_request_details' custom_package.id %}">
+                                            {% if custom_package.travel_insurance == True %}
+                                              <i class="fas fa-check-circle" style="color: green"></i>
+                                            {% else %}
+                                              <i class="fas fa-times-circle" style="color: red"></i>
+                                            {% endif %}
+                                        </a>
+                                    </td>
+                                      <td>
+                                        <a href="{% url 'dap_booking:custom_package_request_details' custom_package.id %}">
+                                            {% if custom_package.travel_voucher == True %}
+                                              <i class="fas fa-check-circle" style="color: green"></i>
+                                            {% else %}
+                                              <i class="fas fa-times-circle" style="color: red"></i>
+                                            {% endif %}
+                                        </a>
+                                    </td>
+                                  </tr>
                                 {% endfor %}
                             {% endif %}
                           </tbody>
