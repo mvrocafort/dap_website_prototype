@@ -1,0 +1,165 @@
+{% extends 'admin/base.html' %}
+
+{% block content %}
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<!-- Google Fonts -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<!-- Bootstrap core CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+<!-- Material Design Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.14.0/css/mdb.min.css" rel="stylesheet">
+
+<div class="container" style="background-color: rgb(55,56,55)">
+    <div class="row justify-content-center">
+        <div class="col-4 mt-3 mb-3" style="min-width: 100%;">
+                    <!-- Card -->
+                    <div class="card booking-card" style="background-color: slategray">
+                        <h1 class="text-center font-weight-bold" style="color: white;">
+                            Discover Asia Philippines Dashboard
+                        </h1>
+                    </div>
+                    <!-- Card -->
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col mb-3" style="min-width: 25%;">
+                <!-- Card -->
+                <div class="card booking-card" style="">
+                  <!-- Card content -->
+                  <div class="card-body" style="min-height: 226px; background-color: #33b5e5">
+                    <!-- Data -->
+                    <a href="/admin/dap_booking/transaction/" style="color: black">
+                        <p class="text-center font-weight-bold" style="font-size: 70px">{{ pending_bookings }}</p>
+                        <p class="text-center" style="font-size: 20px">Pending Bookings</p>
+                    </a>
+                  </div>
+                </div>
+                <!-- Card -->
+            </div>
+        <div class="col mb-3" style="min-width: 25%;">
+                <!-- Card -->
+                <div class="card booking-card">
+                  <!-- Card content -->
+                  <div class="card-body" style="min-height: 226px; background-color: white">
+                    <!-- Data -->
+                    <a href="/admin/dap_booking/transaction/" style="color: black">
+                        <p class="text-center font-weight-bold" style="font-size: 70px">{{ finished_bookings }}</p>
+                        <p class="text-center" style="font-size: 20px">Finished Bookings</p>
+                    </a>
+                  </div>
+                </div>
+                <!-- Card -->
+            </div>
+        <div class="col mb-3" style="min-width: 25%;">
+                <!-- Card -->
+                <div class="card booking-card" style="">
+                  <!-- Card content -->
+                  <div class="card-body" style="min-height: 226px; background-color: #33b5e5">
+                    <!-- Data -->
+                    <a href="/admin/dap_booking/custompackagerequest/" style="color: black">
+                        <p class="text-center font-weight-bold" style="font-size: 70px;">{{ finished_custom_package_requests }}</p>
+                        <p class="text-center" style="font-size: 20px">Pending Custom Package Requests</p>
+                    </a>
+                  </div>
+                </div>
+                <!-- Card -->
+            </div>
+        <div class="col mb-3" style="min-width: 25%;">
+                <!-- Card -->
+                <div class="card booking-card" style="">
+                  <!-- Card content -->
+                  <div class="card-body" style="min-height: 226px; background-color: white">
+                    <!-- Data -->
+                    <a href="/admin/dap_booking/custompackagerequest/" style="color: black">
+                        <p class="text-center font-weight-bold" style="font-size: 70px">{{ pending_custom_package_requests }}</p>
+                        <p class="text-center" style="font-size: 20px">Finished Custom Package Requests</p>
+                    </a>
+                  </div>
+                </div>
+                <!-- Card -->
+            </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col" style="margin-bottom: 20px; min-width: 50%;">
+            <!-- Card -->
+            <div class="card booking-card" style="">
+              <!-- Card content -->
+              <div class="card-body">
+                <!-- Data -->
+                  <h3>Package Trend</h3>
+                  <canvas id="pie-chart"></canvas>
+              </div>
+            </div>
+            <!-- Card -->
+        </div>
+        <div class="col" style="margin-bottom: 20px; min-width: 50%;">
+            <!-- Card -->
+            <div class="card booking-card" style="">
+              <!-- Card content -->
+              <div class="card-body">
+                <!-- Data -->
+                  <h3>Booking Trend</h3>
+                  <canvas id="bar-chart"></canvas>
+              </div>
+            </div>
+            <!-- Card -->
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script>
+    var config_pie = {
+      type: 'pie',
+      data: {
+        datasets: [{
+          data: {{ data|safe }},
+          backgroundColor: [
+            '#692047', 'rgba(255,231,34,0.71)', '#2225a9', '#17c045', '#D3D3D3'
+          ],
+          label: 'Package'
+        }],
+        labels: {{ labels|safe }}
+      },
+      options: {
+        responsive: true
+      }
+    };
+    var config_bar = {
+      type: 'bar',
+      data: {
+        datasets: [{
+          data: {{ data|safe }},
+          backgroundColor: [
+            '#692047', 'rgba(255,231,34,0.71)', '#2225a9', '#17c045', '#D3D3D3'
+          ],
+          label: 'Booking'
+        }],
+        labels: {{ labels|safe }}
+      },
+      options: {
+        responsive: true
+      }
+    };
+
+    window.onload = function() {
+      var ctx_pie = document.getElementById('pie-chart').getContext('2d');
+      window.myPie = new Chart(ctx_pie, config_pie);
+      var ctx_bar = document.getElementById('bar-chart').getContext('2d');
+      window.myBar = new Chart(ctx_bar, config_bar);
+
+    };
+
+</script>
+    <!-- JQuery -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.14.0/js/mdb.min.js"></script>
+{% endblock %}

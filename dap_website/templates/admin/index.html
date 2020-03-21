@@ -1,0 +1,10 @@
+{% extends "admin/index.html" %}
+
+{% block sidebar %}
+    {{block.super}}
+    <div>
+        <a href="/dashboard">
+            <button>Go to Dashboard</button>
+        </a>
+    </div>
+{% endblock %}

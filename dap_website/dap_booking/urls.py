@@ -23,4 +23,5 @@ urlpatterns = [
 
     path('bookings/<str:pk>/', views.bookings, name='bookings'),
     path('custom_package_request_bookings/<str:pk>/', views.custom_package_request_bookings, name='custom_package_request_bookings'),
+    path('dashboard/', views.dashboard, name='dashboard'),
 ]

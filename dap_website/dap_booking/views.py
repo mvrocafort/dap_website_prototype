@@ -205,3 +205,31 @@ def custom_package_request_details(request, pk):
     
     context = {'custom_package': custom_package}
     return render(request, 'dap_booking/custom_package_details.html', context)
+
+
+def dashboard(request):
+    labels = []
+    data = []
+
+    package_trend = Package.objects.all()
+    for x in package_trend:
+        labels.append(x.title)
+        data.append(x.transaction_set.count())
+
+    #print(package_trend)
+
+    pending_bookings = Transaction.objects.filter(proof_of_payment_status=False).count()
+    finished_bookings = Transaction.objects.filter(is_finished=True).count()
+    pending_custom_package_requests = CustomPackageRequest.objects.filter(request_status='Approved').count()
+    finished_custom_package_requests = CustomPackageRequest.objects.filter(request_status='Processing').count()
+
+    context = {
+        'labels': labels,
+        'data': data,
+        'pending_bookings': pending_bookings,
+        'finished_bookings': finished_bookings,
+        'pending_custom_package_requests': pending_custom_package_requests,
+        'finished_custom_package_requests': finished_custom_package_requests
+    }
+
+    return render(request, 'dap_booking/dashboard.html', context)
