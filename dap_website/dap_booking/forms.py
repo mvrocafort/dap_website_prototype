@@ -84,6 +84,10 @@ class CustomPackageRequestForm(ModelForm):
         label='Budget for Entire Trip',
         help_text='Including accomodations, travel vouchers, etc. Not including flight tickets.'
     )
+    hotel = forms.BooleanField(
+        label='Hotel Accomodation',
+        required=False
+    )
     travel_voucher = forms.BooleanField(
         label='Travel Voucher',
         required=False

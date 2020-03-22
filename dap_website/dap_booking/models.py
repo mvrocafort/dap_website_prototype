@@ -14,6 +14,9 @@ class UserProfile(models.Model):
     def __str__(self):
         return f'{self.user.username} Profile'
 
+    class Meta:
+        verbose_name = "User Profile"
+
 
 def return_flight():
     return timezone.now() + timezone.timedelta(days=7)
@@ -31,12 +34,15 @@ class Package(models.Model):
 
     title = models.CharField(max_length=100)
     package_display_picture = models.ImageField(default='package_display_pictures/default_package_picture.jpg', upload_to='package_display_pictures')
+
     num_days = models.IntegerField()
     num_countries = models.IntegerField()
     num_cities = models.IntegerField()
+
     description = models.TextField(max_length=400)
     price = models.FloatField()
     discounted_price = models.FloatField(blank=True, null=True)
+
     travel_outbound_flight_date = models.DateField(default=timezone.now)
     travel_inbound_flight_date = models.DateField(default=return_flight)
 
@@ -124,7 +130,7 @@ class CustomPackageRequest(models.Model):
     travel_outbound_flight_date = models.DateField(default=timezone.now)
     travel_inbound_flight_date = models.DateField(default=timezone.now)
 
-    hotel = models.BooleanField(default=False, blank=True)
+    hotel_accomodation = models.BooleanField(default=False, blank=True)
 
     travel_voucher = models.BooleanField(default=False, blank=True)
     travel_insurance = models.BooleanField(default=False, blank=True)
@@ -142,3 +148,6 @@ class CustomPackageRequest(models.Model):
 
     def __str__(self):
         return self.title + " - " + str(self.id) + " - " + str(self.request_date)
+
+    class Meta:
+        verbose_name = "Custom Package Request"

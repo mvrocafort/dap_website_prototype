@@ -109,6 +109,12 @@ class PackageAdmin(admin.ModelAdmin):
         if not change:
             obj.package_creator = request.user
         obj.save()'''
+    # Pre-populate the package creator with the current logged in user
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(PackageAdmin, self).get_form(request, obj, **kwargs)
+        form.base_fields['package_creator'].initial = request.user
+
+        return form
 
 class CustomPackageAdmin(admin.ModelAdmin):
     list_display = (
@@ -117,7 +123,7 @@ class CustomPackageAdmin(admin.ModelAdmin):
         'user',
         'request_date',
         'flight_ticket',
-        'hotel',
+        'hotel_accomodation',
         'travel_voucher',
         'travel_insurance',
         'request_status'
@@ -126,7 +132,7 @@ class CustomPackageAdmin(admin.ModelAdmin):
         ('request_date', 'user'),
         ('title', 'budget', 'quantity'),
         ('origin', 'destination'),
-        ('flight_ticket', 'hotel', 'travel_voucher', 'travel_insurance', 'travel_outbound_flight_date', 'travel_inbound_flight_date'),
+        ('flight_ticket', 'hotel_accomodation', 'travel_voucher', 'travel_insurance', 'travel_outbound_flight_date', 'travel_inbound_flight_date'),
         'additional_notes',
         ('contact_person', 'contact_number', 'email_address', 'preferred_time'),
         'request_status'

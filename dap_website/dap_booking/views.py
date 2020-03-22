@@ -174,7 +174,7 @@ def custom_package_request(request):
             post.save()
 
             # send_mail(subject, message, from_email, to_list, fail_silently=True)
-            subject = f'Discover Asia Philippines'
+            subject = f'Discover Asia Philippines - Custom Package Request'
             message = f'Your custom package has been saved. Details: {post.origin} to {post.destination}.'
             from_email = settings.EMAIL_HOST_USER
             to_list = ['mrocafort20@gmail.com', form.cleaned_data['email_address']]

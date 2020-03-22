@@ -46,7 +46,6 @@
                               <th class="th-sm">Total</th>
                               <th class="th-sm">Payment Status</th>
                               <th class="th-sm">Payment Deadline</th>
-                                <th></th>
                             </tr>
                           </thead>
                           <tbody>
@@ -96,9 +95,6 @@
                                       </td>
                                       <td>
                                           <a href="{% url 'dap_booking:transaction_details' booking.id %}">{{ booking.proof_of_payment_deadline }}</a>
-                                      </td>
-                                      <td>
-                                          <a href=""><i class="far fa-trash-alt fa-md red-text"></i></a>
                                       </td>
                                      </tr>
                                 {% endfor %}
